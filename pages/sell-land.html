@@ -59,12 +59,16 @@
                     <div class="space-y-2">
                         <label class="block text-sm font-semibold text-slate-700">Expected Price</label>
                         <div class="flex">
-                            <input type="number" id="expectedPriceValue" step="any" required class="w-full px-4 py-3 rounded-l-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none transition-shadow border-r-0" placeholder="e.g. 50">
+                            <input type="number" id="expectedPriceValue" step="any" required class="w-full px-4 py-3 rounded-l-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none transition-shadow border-r-0" placeholder="e.g. 1.5">
                             <select id="expectedPriceUnit" class="bg-slate-50 px-4 py-3 border border-slate-300 rounded-r-lg focus:ring-2 focus:ring-emerald-500 outline-none text-slate-700 font-medium border-l-0">
                                 <option value="Thousand">Thousand</option>
                                 <option value="Lakh" selected>Lakh</option>
                                 <option value="Crore">Crore</option>
                             </select>
+                        </div>
+                        <div class="flex justify-between items-center text-xs mt-1">
+                            <span class="text-slate-500">Hint: Type <strong>1.5</strong> Crore for 1 Crore 50 Lakh</span>
+                            <span id="pricePreview" class="font-bold text-emerald-600"></span>
                         </div>
                     </div>
                     <div class="flex items-center h-full pt-8">
@@ -111,8 +115,8 @@
                         </select>
                     </div>
                     <div class="space-y-2">
-                        <label class="block text-sm font-semibold text-slate-700">Property Image</label>
-                        <input type="file" id="imageUpload" accept="image/*" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none transition-shadow bg-white text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                        <label class="block text-sm font-semibold text-slate-700">Map Link / Image URL (Optional)</label>
+                        <input type="url" id="mapLink" class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none transition-shadow" placeholder="https://...">
                     </div>
                 </div>
 
@@ -131,14 +135,35 @@
     </main>
 
     <script type="module">
-        import { db, storage } from '../js/firebase-config.js';
+        import { db } from '../js/firebase-config.js';
         import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
-        import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-storage.js";
 
         const form = document.getElementById('sellForm');
         const submitBtn = document.getElementById('submitBtn');
         const btnText = document.getElementById('btnText');
         const loadingSpinner = document.getElementById('loadingSpinner');
+        const expectedPriceValue = document.getElementById('expectedPriceValue');
+        const expectedPriceUnit = document.getElementById('expectedPriceUnit');
+        const pricePreview = document.getElementById('pricePreview');
+
+        const updatePreview = () => {
+            const val = parseFloat(expectedPriceValue.value);
+            if (isNaN(val)) {
+                pricePreview.textContent = '';
+                return;
+            }
+            let baseMultiplier = 1;
+            const unit = expectedPriceUnit.value;
+            if (unit === 'Thousand') baseMultiplier = 1000;
+            if (unit === 'Lakh') baseMultiplier = 100000;
+            if (unit === 'Crore') baseMultiplier = 10000000;
+            
+            const total = val * baseMultiplier;
+            pricePreview.textContent = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'NPR', maximumFractionDigits: 0 }).format(total);
+        };
+
+        expectedPriceValue.addEventListener('input', updatePreview);
+        expectedPriceUnit.addEventListener('change', updatePreview);
 
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -146,24 +171,11 @@
             // Set loading state
             submitBtn.disabled = true;
             submitBtn.classList.add('opacity-80', 'cursor-not-allowed');
-            btnText.textContent = 'Uploading Image...';
+            btnText.textContent = 'Saving Listing...';
             loadingSpinner.classList.remove('hidden');
 
             try {
-                // 1. Upload Image
-                const fileInput = document.getElementById('imageUpload');
-                const file = fileInput.files[0];
-                let imageUrl = "";
-
-                if (file) {
-                    const storageRef = ref(storage, 'land_images/' + Date.now() + '_' + file.name);
-                    await uploadBytes(storageRef, file);
-                    imageUrl = await getDownloadURL(storageRef);
-                }
-
-                btnText.textContent = 'Saving Listing...';
-
-                // 2. Price Calc
+                // Price Calc
                 let baseMultiplier = 1;
                 const unit = document.getElementById('expectedPriceUnit').value;
                 if (unit === 'Thousand') baseMultiplier = 1000;
@@ -172,7 +184,7 @@
 
                 const expectedPrice = parseFloat(document.getElementById('expectedPriceValue').value) * baseMultiplier;
 
-                // 3. Save listing
+                // Save listing
                 const listingData = {
                     ownerName: document.getElementById('ownerName').value,
                     contactNumber: document.getElementById('contactNumber').value,
@@ -183,7 +195,7 @@
                     city: document.getElementById('city').value,
                     localArea: document.getElementById('localArea').value,
                     roadAccess: document.getElementById('roadAccess').value,
-                    imageUrl: imageUrl,
+                    mapLink: document.getElementById('mapLink').value,
                     createdAt: serverTimestamp()
                 };
 
