@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sell Land - Apeel Land Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 min-h-screen">
+    
+    <nav class="bg-white border-b border-slate-200 px-4 py-4 md:px-8 flex justify-between items-center sticky top-0 z-50">
+        <a href="../index.html" class="flex items-center gap-2 text-xl font-bold tracking-tight text-slate-800 hover:text-blue-600 transition-colors uppercase">
+            <img src="../logo.png" alt="Apeel Logo" class="h-8 w-auto object-contain" onerror="this.outerHTML='<span class=&quot;text-blue-600 font-extrabold&quot;>A</span>'">
+            Apeel Land
+        </a>
+        <a href="../index.html" class="text-sm font-medium text-slate-600 hover:text-slate-900 bg-slate-100 px-4 py-2 rounded-full transition-colors">Back to Home</a>
+    </nav>
+
+    <main class="max-w-2xl mx-auto px-4 py-12">
+        <div class="bg-white rounded-2xl shadow-sm border border-slate-200 p-6 md:p-10">
+            <div class="mb-8">
+                <h1 class="text-3xl font-bold text-slate-800 mb-2">List Your Land for Sale</h1>
+                <p class="text-slate-500">Fill in the details below to add your property to our marketplace.</p>
+            </div>
+
+            <form id="sellForm" class="space-y-6">
+                <!-- Owner Info -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-slate-700">Seller/Owner Name</label>
+                        <input type="text" id="ownerName" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none transition-shadow" placeholder="e.g. Ram Bahadur">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-slate-700">Contact Number</label>
+                        <input type="tel" id="contactNumber" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none transition-shadow" placeholder="e.g. 98XXXXXXXX">
+                    </div>
+                </div>
+
+                <!-- Land Size -->
+                <div class="space-y-2">
+                    <label class="block text-sm font-semibold text-slate-700">Land Size</label>
+                    <div class="flex">
+                        <input type="number" id="landSizeValue" step="any" required class="w-full px-4 py-3 rounded-l-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none transition-shadow border-r-0" placeholder="e.g. 10">
+                        <select id="landSizeUnit" class="bg-slate-50 px-4 py-3 border border-slate-300 rounded-r-lg focus:ring-2 focus:ring-emerald-500 outline-none text-slate-700 font-medium border-l-0">
+                            <option value="Aana">Aana</option>
+                            <option value="Ropani">Ropani</option>
+                            <option value="Dhur">Dhur</option>
+                            <option value="Katha">Katha</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Price -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-slate-700">Expected Price</label>
+                        <div class="flex">
+                            <input type="number" id="expectedPriceValue" step="any" required class="w-full px-4 py-3 rounded-l-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none transition-shadow border-r-0" placeholder="e.g. 50">
+                            <select id="expectedPriceUnit" class="bg-slate-50 px-4 py-3 border border-slate-300 rounded-r-lg focus:ring-2 focus:ring-emerald-500 outline-none text-slate-700 font-medium border-l-0">
+                                <option value="Thousand">Thousand</option>
+                                <option value="Lakh" selected>Lakh</option>
+                                <option value="Crore">Crore</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="flex items-center h-full pt-8">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <div class="relative flex items-center">
+                                <input type="checkbox" id="priceNegotiable" class="peer sr-only">
+                                <div class="w-6 h-6 rounded border-2 border-slate-300 bg-white peer-checked:bg-emerald-500 peer-checked:border-emerald-500 transition-colors"></div>
+                                <svg class="absolute w-4 h-4 left-1 top-1 text-white opacity-0 peer-checked:opacity-100 transition-opacity pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"></path></svg>
+                            </div>
+                            <span class="text-sm font-medium text-slate-700 group-hover:text-slate-900 transition-colors">Price Negotiable</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Location -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-slate-700">City</label>
+                        <select id="city" class="w-full px-4 py-3 rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition-shadow text-slate-700">
+                            <option value="Pokhara" selected>Pokhara</option>
+                            <option value="Kathmandu">Kathmandu</option>
+                            <option value="Lalitpur">Lalitpur</option>
+                            <option value="Bhaktapur">Bhaktapur</option>
+                            <option value="Chitwan">Chitwan</option>
+                            <option value="Biratnagar">Biratnagar</option>
+                            <option value="Butwal">Butwal</option>
+                            <option value="Dharan">Dharan</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-slate-700">Specific Local Area</label>
+                        <input type="text" id="localArea" required class="w-full px-4 py-3 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none transition-shadow" placeholder="e.g. Hemja, Bagar">
+                    </div>
+                </div>
+
+                <!-- Attributes -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-slate-700">Road Access</label>
+                        <select id="roadAccess" class="w-full px-4 py-3 rounded-lg border border-slate-300 bg-white focus:ring-2 focus:ring-emerald-500 outline-none transition-shadow text-slate-700">
+                            <option value="Mator Bato">Mator Bato (Motorable Road)</option>
+                            <option value="Goreto">Goreto (Foot Trail)</option>
+                            <option value="None">None</option>
+                        </select>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="block text-sm font-semibold text-slate-700">Property Image</label>
+                        <input type="file" id="imageUpload" accept="image/*" class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:ring-2 focus:ring-emerald-500 outline-none transition-shadow bg-white text-slate-600 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-emerald-50 file:text-emerald-700 hover:file:bg-emerald-100">
+                    </div>
+                </div>
+
+                <!-- Submit -->
+                <div class="pt-6">
+                    <button type="submit" id="submitBtn" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-semibold py-4 rounded-xl shadow-lg shadow-emerald-600/30 transition-all hover:-translate-y-0.5 flex justify-center items-center gap-2">
+                        <span id="btnText">Submit Property Listing</span>
+                        <svg id="loadingSpinner" class="animate-spin h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <script type="module">
+        import { db, storage } from '../js/firebase-config.js';
+        import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+        import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-storage.js";
+
+        const form = document.getElementById('sellForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const btnText = document.getElementById('btnText');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Set loading state
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-80', 'cursor-not-allowed');
+            btnText.textContent = 'Uploading Image...';
+            loadingSpinner.classList.remove('hidden');
+
+            try {
+                // 1. Upload Image
+                const fileInput = document.getElementById('imageUpload');
+                const file = fileInput.files[0];
+                let imageUrl = "";
+
+                if (file) {
+                    const storageRef = ref(storage, 'land_images/' + Date.now() + '_' + file.name);
+                    await uploadBytes(storageRef, file);
+                    imageUrl = await getDownloadURL(storageRef);
+                }
+
+                btnText.textContent = 'Saving Listing...';
+
+                // 2. Price Calc
+                let baseMultiplier = 1;
+                const unit = document.getElementById('expectedPriceUnit').value;
+                if (unit === 'Thousand') baseMultiplier = 1000;
+                if (unit === 'Lakh') baseMultiplier = 100000;
+                if (unit === 'Crore') baseMultiplier = 10000000;
+
+                const expectedPrice = parseFloat(document.getElementById('expectedPriceValue').value) * baseMultiplier;
+
+                // 3. Save listing
+                const listingData = {
+                    ownerName: document.getElementById('ownerName').value,
+                    contactNumber: document.getElementById('contactNumber').value,
+                    landSizeValue: parseFloat(document.getElementById('landSizeValue').value),
+                    landSizeUnit: document.getElementById('landSizeUnit').value,
+                    expectedPrice: expectedPrice,
+                    priceNegotiable: document.getElementById('priceNegotiable').checked,
+                    city: document.getElementById('city').value,
+                    localArea: document.getElementById('localArea').value,
+                    roadAccess: document.getElementById('roadAccess').value,
+                    imageUrl: imageUrl,
+                    createdAt: serverTimestamp()
+                };
+
+                await addDoc(collection(db, "land_listings"), listingData);
+                // Redirect on success
+                window.location.href = './browse-land.html';
+            } catch (error) {
+                console.error("Error adding document: ", error);
+                alert("Failed to save listing. Check console for details or verify Firebase config.");
+                // Reset button on failure
+                submitBtn.disabled = false;
+                submitBtn.classList.remove('opacity-80', 'cursor-not-allowed');
+                btnText.textContent = 'Submit Property Listing';
+                loadingSpinner.classList.add('hidden');
+            }
+        });
+    </script>
+</body>
+</html>
