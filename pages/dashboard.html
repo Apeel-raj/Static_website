@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Tuition Finder</title>
+    <!-- Using optimized local Tailwind build -->
+    <link href="../css/output.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>body { font-family: 'Inter', sans-serif; }</style>
+</head>
+<body class="bg-gray-50 text-gray-900 min-h-screen">
+    
+    <!-- Navbar -->
+    <nav class="bg-white shadow-sm sticky top-0 z-20">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <a href="../index.html" class="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600 transition-all hover:opacity-80">
+                    Tuition Finder
+                </a>
+                <div class="flex gap-4 items-center">
+                    <a href="./teacher-form.html" class="text-sm font-medium text-gray-500 hover:text-purple-600 transition-colors hidden sm:block">Register as Teacher</a>
+                    <a href="./student-form.html" class="text-sm font-medium bg-indigo-50 text-indigo-700 hover:bg-indigo-100 py-2 px-4 rounded-lg transition-colors">Post Request</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-5xl mx-auto px-4 py-8 relative">
+        
+        <!-- Tabs -->
+        <div class="flex justify-center mb-8">
+            <div class="bg-white p-1 rounded-xl shadow-sm border border-gray-100 flex inline-block">
+                <button id="tab-requests" class="w-40 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 bg-indigo-50 text-indigo-700 shadow-inner">
+                    Student Requests
+                </button>
+                <button id="tab-teachers" class="w-40 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 text-gray-500 hover:text-gray-700">
+                    Browse Teachers
+                </button>
+            </div>
+        </div>
+
+        <!-- Search Section -->
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 mb-8 relative z-10">
+            <h2 id="search-title" class="text-2xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                <span>Find Opportunities</span>
+            </h2>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <div class="relative flex-grow">
+                    <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                        <svg class="h-5 w-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    </div>
+                    <input type="text" id="search-bar" placeholder="Search by Area, City, Name or Grade..." class="block w-full pl-11 pr-4 py-3.5 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all text-gray-700 bg-gray-50/50 hover:bg-gray-50 shadow-inner text-sm sm:text-base">
+                </div>
+                <button id="detect-location-btn" class="flex-none bg-indigo-50 text-indigo-700 hover:bg-indigo-100 border border-indigo-100 font-semibold py-3.5 px-6 rounded-xl transition-all duration-200 flex items-center justify-center gap-2 shadow-sm text-sm sm:text-base">
+                    <span>📍 Auto-detect Area</span>
+                </button>
+            </div>
+            <p id="location-status" class="text-sm font-medium mt-3 hidden flex items-center gap-1.5"></p>
+        </div>
+
+        <!-- Feed Section -->
+        <div id="requests-feed" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Loading Skeletons -->
+            <div class="animate-pulse bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-48 flex flex-col justify-between">
+                <div><div class="h-5 bg-gray-200 rounded w-1/2 mb-2"></div><div class="h-3 bg-gray-100 rounded w-1/3 mb-6"></div></div>
+                <div class="h-10 bg-gray-50 rounded-xl w-full mt-4"></div>
+            </div>
+            <div class="animate-pulse bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-48 flex flex-col justify-between hidden md:flex">
+                <div><div class="h-5 bg-gray-200 rounded w-1/2 mb-2"></div><div class="h-3 bg-gray-100 rounded w-1/3 mb-6"></div></div>
+                <div class="h-10 bg-gray-50 rounded-xl w-full mt-4"></div>
+            </div>
+            <div class="animate-pulse bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-48 flex flex-col justify-between hidden lg:flex">
+                <div><div class="h-5 bg-gray-200 rounded w-1/2 mb-2"></div><div class="h-3 bg-gray-100 rounded w-1/3 mb-6"></div></div>
+                <div class="h-10 bg-gray-50 rounded-xl w-full mt-4"></div>
+            </div>
+        </div>
+        
+        <!-- Empty State -->
+        <div id="empty-state" class="hidden flex flex-col items-center justify-center text-center py-20 bg-white rounded-2xl shadow-sm border border-gray-100 mt-6">
+            <div class="h-16 w-16 bg-gray-50 rounded-full flex items-center justify-center mb-4">
+                <svg class="h-8 w-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 mb-2">No listings found</h3>
+            <p class="text-gray-500 max-w-sm mb-6">Try adjusting your search area or check back later to see new opportunities.</p>
+            <button onclick="document.getElementById('search-bar').value=''; document.getElementById('search-bar').dispatchEvent(new Event('input'))" class="text-indigo-600 font-medium hover:text-indigo-800 transition-colors">
+                Clear filters
+            </button>
+        </div>
+    </div>
+
+    <!-- App Logic -->
+    <script type="module" src="../js/app.js"></script>
+</body>
+</html>
