@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Apeel Raj Adhikari | Portfolio</title>
     <meta name="description" content="Portfolio of Apeel Raj Adhikari, an IT student from Pokhara, Nepal, and AI enthusiast.">
-    <link rel="stylesheet" href="./css/style.css?v=1.0.1">
+    <link rel="stylesheet" href="./css/style.css?v=1.0.2">
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -127,11 +127,71 @@
         <section id="projects" class="section">
             <div class="container">
                 <h2 class="section-title stagger-text">Featured Work</h2>
-                <div class="about-grid">
-                    <div class="about-text fade-up" style="max-width: 800px; margin: 0 auto;">
-                        <h3 style="font-size: 2rem; margin-bottom: 1rem; color: var(--text-main);">Game Arcade</h3>
-                        <p>A fully interactive gaming website built from scratch. It features multiple playable experiences, dynamic interfaces, and a complete interactive aesthetic.</p>
-                        <a href="./game/index.html" target="_blank" class="btn fade-up" style="margin-top: 1rem;">Launch Arcade</a>
+                <div class="projects-grid">
+                    <!-- Project 1: Out of Town Adventure -->
+                    <div class="project-card fade-up">
+                        <div>
+                            <svg class="project-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M 15,75 L 45,25 L 75,75" />
+                                <path d="M 40,75 L 60,45 L 85,75" />
+                                <path d="M 33,45 L 43,48" />
+                            </svg>
+                            <h3>Out of Town Adventure</h3>
+                            <p>A premium adventure tourism and trekking portal for the Himalayas. Features Supabase integration for dynamic route loading and modern glassmorphism aesthetics.</p>
+                            <div class="project-tech-tags">
+                                <span>Vite / JS</span>
+                                <span>Supabase</span>
+                                <span>TailwindCSS</span>
+                            </div>
+                            <div class="project-collab">
+                                In collaboration with <a href="https://ankityogi.com.np/" target="_blank">Ankit Yogi</a>
+                            </div>
+                        </div>
+                        <a href="https://outoftowns.com/" target="_blank" class="project-link">Launch Site &rarr;</a>
+                    </div>
+
+                    <!-- Project 2: Restaurant Staff Management System -->
+                    <div class="project-card fade-up">
+                        <div>
+                            <svg class="project-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M 20,65 L 80,65" />
+                                <path d="M 25,65 C 25,40 75,40 75,65 Z" fill="none" />
+                                <circle cx="50" cy="35" r="4" fill="currentColor" />
+                            </svg>
+                            <h3>Restaurant Staff WebApp</h3>
+                            <p>A real-time staff coordination web application for restaurant management. Connects waiters (order entry), kitchen staff (live preparation queue), and admins.</p>
+                            <div class="project-tech-tags">
+                                <span>React</span>
+                                <span>Node.js</span>
+                                <span>WebSockets</span>
+                                <span>Supabase</span>
+                            </div>
+                            <div class="project-collab">
+                                In collaboration with <a href="https://ankityogi.com.np/" target="_blank">Ankit Yogi</a>
+                            </div>
+                        </div>
+                        <span class="project-link" style="opacity: 0.6; cursor: default;">Internal System</span>
+                    </div>
+
+                    <!-- Project 3: Game Arcade -->
+                    <div class="project-card fade-up">
+                        <div>
+                            <svg class="project-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                <rect x="15" y="30" width="70" height="40" rx="10" />
+                                <path d="M 30,50 L 40,50 M 35,45 L 35,55" />
+                                <circle cx="60" cy="50" r="4" fill="currentColor" />
+                                <circle cx="70" cy="45" r="4" fill="currentColor" />
+                            </svg>
+                            <h3>Interactive Game Arcade</h3>
+                            <p>A fully interactive retro-modern gaming website built from scratch. Features multiple classic playable experiences with smooth CSS and SVG animations.</p>
+                            <div class="project-tech-tags">
+                                <span>HTML5</span>
+                                <span>CSS3</span>
+                                <span>JavaScript</span>
+                                <span>SVG</span>
+                            </div>
+                        </div>
+                        <a href="./game/index.html" target="_blank" class="project-link">Launch Arcade &rarr;</a>
                     </div>
                 </div>
             </div>
