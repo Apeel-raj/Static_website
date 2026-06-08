@@ -267,23 +267,58 @@ h1, h2, h3 {
 }
 
 .project-card {
+    position: relative;
+    overflow: hidden;
     background: var(--card-bg);
     border: 1px solid var(--card-border);
     padding: 2.5rem;
     border-radius: 16px;
     backdrop-filter: blur(10px);
-    transition: background 0.5s, border-color 0.5s, transform 0.3s, box-shadow 0.3s;
+    transition: background 0.5s, border-color 0.5s, transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s;
     text-align: left;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    transform-style: preserve-3d;
 }
 
-.project-card:hover {
-    transform: translateY(-5px);
-    border-color: var(--text-main);
-    background: rgba(255, 255, 255, 0.05);
+/* Mouse-follow glow effect */
+.project-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+        rgba(255, 255, 255, 0.08),
+        transparent 50%
+    );
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+/* Light theme adjustments for the glow */
+:root[data-theme="light"] .project-card::before {
+    background: radial-gradient(
+        350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
+        rgba(0, 0, 0, 0.05),
+        transparent 50%
+    );
+}
+
+.project-card:hover::before {
+    opacity: 1;
+}
+
+/* Ensure card content renders on top of glow */
+.project-card > * {
+    position: relative;
+    z-index: 1;
 }
 
 .project-card h3 {
@@ -305,6 +340,36 @@ h1, h2, h3 {
     margin-bottom: 1.5rem;
     color: var(--text-main);
     display: block;
+}
+
+/* Project Icon Micro-animations */
+.project-icon * {
+    transform-origin: center;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), stroke 0.3s, fill 0.3s;
+}
+
+/* Controller shake */
+.project-card:hover .project-icon rect {
+    transform: scale(1.05);
+}
+.project-card:hover .project-icon path {
+    transform: scale(1.05);
+}
+.project-card:hover .project-icon circle {
+    transform: scale(1.2);
+}
+
+/* Mountain peak caps */
+.project-card:hover .project-icon path:nth-of-type(3) {
+    transform: translateY(-4px) scaleY(1.1);
+}
+
+/* Lift restaurant lid */
+.project-card:hover .project-icon path:nth-of-type(2) {
+    transform: translateY(-6px) rotate(-6deg);
+}
+.project-card:hover .project-icon circle {
+    transform: translateY(-6px) rotate(-6deg);
 }
 
 .project-tech-tags {
