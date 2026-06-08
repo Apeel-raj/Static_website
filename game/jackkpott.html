@@ -1,0 +1,301 @@
+<html>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" width="100%" height="100%">
+    <defs>
+        <!-- Background Grid Pattern -->
+        <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+            <path d="M 40 0 L 0 40 M 0 0 L 40 40" stroke="#00FF55" stroke-width="2" opacity="0.15"/>
+        </pattern>
+
+        <!-- Drop Shadow for Character and Elements -->
+        <filter id="dropShadow" x="-20%" y="-20%" width="150%" height="150%">
+            <feDropShadow dx="0" dy="12" stdDeviation="10" flood-color="#000" flood-opacity="0.6"/>
+        </filter>
+
+        <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="50"/>
+        </filter>
+
+        <!-- Reusable Coin -->
+        <g id="coin">
+            <circle cx="0" cy="0" r="24" fill="#FFD700" stroke="#DAA520" stroke-width="4"/>
+            <circle cx="0" cy="0" r="16" fill="none" stroke="#DAA520" stroke-width="2"/>
+            <text x="0" y="7" font-family="Impact, sans-serif" font-weight="bold" font-size="20" fill="#DAA520" text-anchor="middle">$</text>
+        </g>
+    </defs>
+
+    <!-- ================= BACKGROUND ================= -->
+    <rect width="100%" height="100%" fill="#00220a"/>
+    
+    <!-- Animated Glowing Blobs for Energy Effect -->
+    <g opacity="0.6">
+        <circle cx="200" cy="300" r="300" fill="#00FF55" filter="url(#glow)">
+            <animate attributeName="r" values="300; 450; 300" dur="4s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.5; 0.9; 0.5" dur="3s" repeatCount="indefinite"/>
+        </circle>
+        <circle cx="600" cy="300" r="350" fill="#00B33C" filter="url(#glow)">
+            <animate attributeName="r" values="350; 250; 350" dur="5s" repeatCount="indefinite"/>
+            <animate attributeName="opacity" values="0.8; 0.4; 0.8" dur="4s" repeatCount="indefinite"/>
+        </circle>
+    </g>
+
+    <!-- Animated Kinetic Grid -->
+    <rect x="-50" y="-50" width="900" height="700" fill="url(#grid)">
+        <animateTransform attributeName="transform" type="translate" values="0,0; -40,-40" dur="1s" repeatCount="indefinite" calcMode="linear"/>
+    </rect>
+
+
+    <!-- ================= CHARACTER ================= -->
+    <!-- The entire character bounces to the 120BPM beat (every 0.5s) -->
+    <g id="character_master" filter="url(#dropShadow)">
+        <animateTransform attributeName="transform" type="translate" values="0,6; 0,-4; 0,6" dur="0.5s" repeatCount="indefinite" calcMode="spline" keySplines="0.4 0 0.2 1; 0.4 0 0.2 1"/>
+
+        <!-- Base Body / Hoodie -->
+        <path d="M 230 650 C 230 450 320 380 400 380 C 480 380 570 450 570 650 Z" fill="#151515" stroke="#000" stroke-width="4"/>
+        <!-- Chest Logo (GOD text in pink box) -->
+        <g transform="translate(365, 470)">
+            <rect x="0" y="0" width="70" height="30" rx="8" fill="#FF66B2"/>
+            <text x="35" y="21" font-family="Arial Black, sans-serif" font-weight="bold" font-size="18" fill="#FFF" text-anchor="middle">GOD</text>
+        </g>
+        <!-- Hoodie Strings -->
+        <path d="M 370 400 L 370 450 M 430 400 L 430 460" stroke="#333" stroke-width="6" stroke-linecap="round"/>
+
+        <!-- Base Head & Hat -->
+        <rect x="330" y="200" width="140" height="170" rx="60" fill="#4A2C1A"/> <!-- Face Base -->
+        <path d="M 330 300 C 330 390 470 390 470 300 L 440 350 C 420 380 380 380 360 350 Z" fill="#111"/> <!-- Beard -->
+        
+        <!-- Earrings -->
+        <circle cx="325" cy="290" r="10" fill="none" stroke="#E0E0E0" stroke-width="4"/>
+        <circle cx="475" cy="290" r="10" fill="none" stroke="#E0E0E0" stroke-width="4"/>
+
+        <!-- Black Cap -->
+        <path d="M 320 220 C 320 120 480 120 480 220 Z" fill="#111"/>
+        <path d="M 300 220 Q 400 245 500 220" stroke="#EEE" stroke-width="8" stroke-linecap="round" fill="none"/> <!-- Brim -->
+        <!-- Cap Bunny Logo -->
+        <path d="M 395 190 L 388 165 L 400 180 L 412 165 L 405 190 Z" fill="#FFF"/>
+
+        <!-- EXPRESSIONS (Toggled via Discrete Opacity matching the 6-second Timeline) -->
+        <!-- Timeline breakdown: 
+             0.000 - 0.125 (0.00s - 0.75s): Hold Up (Neutral/Puzzled)
+             0.125 - 0.375 (0.75s - 2.25s): Fists / Jackpot 1 (Excited)
+             0.375 - 0.625 (2.25s - 3.75s): Thumbs / Hey (Smile)
+             0.625 - 1.000 (3.75s - 6.00s): Point / Jackpot 2 (Excited)
+        -->
+
+        <!-- 1. Neutral / Puzzled Face -->
+        <g>
+            <animate attributeName="opacity" values="1;0;0" keyTimes="0;0.125;1" dur="6s" repeatCount="indefinite" calcMode="discrete"/>
+            <!-- Eyes half closed -->
+            <path d="M 360 265 Q 375 260 390 265 M 410 265 Q 425 260 440 265" fill="none" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+            <circle cx="375" cy="270" r="3" fill="#111"/>
+            <circle cx="425" cy="270" r="3" fill="#111"/>
+            <!-- Puzzled eyebrows -->
+            <path d="M 360 250 L 385 245 M 440 250 L 415 245" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+            <!-- Straight Mouth -->
+            <line x1="380" y1="320" x2="420" y2="320" stroke="#111" stroke-width="4" stroke-linecap="round"/>
+        </g>
+
+        <!-- 2. Excited / Yelling Face (Used in Jackpot 1 & 2) -->
+        <g>
+            <animate attributeName="opacity" values="0;1;0;1" keyTimes="0;0.125;0.375;0.625;1" dur="6s" repeatCount="indefinite" calcMode="discrete"/>
+            <!-- Wide Eyes -->
+            <circle cx="375" cy="265" r="7" fill="#111"/>
+            <circle cx="425" cy="265" r="7" fill="#111"/>
+            <!-- Raised eyebrows -->
+            <path d="M 360 245 L 385 240 M 440 245 L 415 240" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+            <!-- Open Yelling Mouth -->
+            <ellipse cx="400" cy="325" rx="25" ry="20" fill="#400"/>
+            <path d="M 380 315 Q 400 325 420 315 L 420 310 Q 400 310 380 310 Z" fill="#FFF"/> <!-- Teeth -->
+        </g>
+
+        <!-- 3. Smiling Face (Used in Hey Hey Hey) -->
+        <g>
+            <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.375;0.376;0.625;1" dur="6s" repeatCount="indefinite" calcMode="discrete"/>
+            <!-- Happy squinting eyes -->
+            <path d="M 360 265 Q 375 255 390 265 M 410 265 Q 425 255 440 265" fill="none" stroke="#111" stroke-width="6" stroke-linecap="round"/>
+            <!-- Relaxed eyebrows -->
+            <path d="M 360 245 Q 375 240 390 245 M 410 245 Q 425 240 440 245" fill="none" stroke="#111" stroke-width="5" stroke-linecap="round"/>
+            <!-- Big Smile -->
+            <path d="M 375 315 Q 400 345 425 315 Z" fill="#FFF" stroke="#111" stroke-width="3"/>
+        </g>
+
+
+        <!-- ARMS / POSES -->
+
+        <!-- Pose 2: Fists (Jackpot 1) -->
+        <g>
+            <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.125;0.375;1" dur="6s" repeatCount="indefinite" calcMode="discrete"/>
+            <!-- Left Arm -->
+            <path d="M 270 540 Q 210 440 310 440" fill="none" stroke="#151515" stroke-width="55" stroke-linecap="round"/>
+            <circle cx="310" cy="440" r="30" fill="#4A2C1A"/>
+            <!-- Right Arm -->
+            <path d="M 530 540 Q 590 440 490 440" fill="none" stroke="#151515" stroke-width="55" stroke-linecap="round"/>
+            <circle cx="490" cy="440" r="30" fill="#4A2C1A"/>
+            <!-- Action Lines -->
+            <path d="M 200 420 L 240 460 M 190 460 L 230 480 M 600 420 L 560 460 M 610 460 L 570 480" stroke="#FFF" stroke-width="5" stroke-linecap="round"/>
+        </g>
+
+        <!-- Pose 3: Thumbs (Hey Hey Hey) -->
+        <g>
+            <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.375;0.376;0.625;1" dur="6s" repeatCount="indefinite" calcMode="discrete"/>
+            <!-- Left Arm Inwards -->
+            <path d="M 270 540 Q 250 490 350 490" fill="none" stroke="#151515" stroke-width="55" stroke-linecap="round"/>
+            <circle cx="350" cy="490" r="28" fill="#4A2C1A"/>
+            <path d="M 350 490 L 380 475" stroke="#4A2C1A" stroke-width="16" stroke-linecap="round"/> <!-- Thumb -->
+            <!-- Right Arm Inwards -->
+            <path d="M 530 540 Q 550 490 450 490" fill="none" stroke="#151515" stroke-width="55" stroke-linecap="round"/>
+            <circle cx="450" cy="490" r="28" fill="#4A2C1A"/>
+            <path d="M 450 490 L 420 475" stroke="#4A2C1A" stroke-width="16" stroke-linecap="round"/> <!-- Thumb -->
+        </g>
+
+        <!-- Pose 4: Pointing Up (Jackpot 2) -->
+        <g>
+            <animate attributeName="opacity" values="0;1;0" keyTimes="0;0.625;1" dur="6s" repeatCount="indefinite" calcMode="discrete"/>
+            <!-- Right Arm Pointing Up (Screen Right) -->
+            <path d="M 530 540 Q 590 400 570 240" fill="none" stroke="#151515" stroke-width="55" stroke-linecap="round"/>
+            <circle cx="570" cy="240" r="28" fill="#4A2C1A"/>
+            <path d="M 570 240 L 580 180" stroke="#4A2C1A" stroke-width="16" stroke-linecap="round"/> <!-- Index Finger -->
+            <!-- Action Lines -->
+            <path d="M 600 200 L 640 160 M 620 230 L 660 190" stroke="#FFF" stroke-width="5" stroke-linecap="round"/>
+        </g>
+    </g>
+
+
+    <!-- ================= COIN SHOWER ================= -->
+    <!-- Coins drop ONLY during the Pointing phase (0.625 to 1.0) -->
+    <g id="coin_layer">
+        <!-- Coin 1 -->
+        <g transform="translate(60, 0)">
+            <g>
+                <animateTransform attributeName="transform" type="translate" values="0,-100; 0,-100; 0,800; 0,800" keyTimes="0; 0.625; 0.85; 1" dur="6s" repeatCount="indefinite"/>
+                <use href="#coin" transform="scale(0.8)"/>
+            </g>
+        </g>
+        <!-- Coin 2 -->
+        <g transform="translate(150, 0)">
+            <g>
+                <animateTransform attributeName="transform" type="translate" values="0,-150; 0,-150; 0,850; 0,850" keyTimes="0; 0.640; 0.90; 1" dur="6s" repeatCount="indefinite"/>
+                <use href="#coin" transform="scale(1.2)"/>
+            </g>
+        </g>
+        <!-- Coin 3 -->
+        <g transform="translate(240, 0)">
+            <g>
+                <animateTransform attributeName="transform" type="translate" values="0,-80; 0,-80; 0,800; 0,800" keyTimes="0; 0.630; 0.80; 1" dur="6s" repeatCount="indefinite"/>
+                <use href="#coin" transform="scale(0.9)"/>
+            </g>
+        </g>
+        <!-- Coin 4 -->
+        <g transform="translate(320, 0)">
+            <g>
+                <animateTransform attributeName="transform" type="translate" values="0,-200; 0,-200; 0,800; 0,800" keyTimes="0; 0.650; 0.88; 1" dur="6s" repeatCount="indefinite"/>
+                <use href="#coin" transform="scale(1.0)"/>
+            </g>
+        </g>
+        <!-- Coin 5 -->
+        <g transform="translate(480, 0)">
+            <g>
+                <animateTransform attributeName="transform" type="translate" values="0,-120; 0,-120; 0,800; 0,800" keyTimes="0; 0.635; 0.82; 1" dur="6s" repeatCount="indefinite"/>
+                <use href="#coin" transform="scale(1.1)"/>
+            </g>
+        </g>
+        <!-- Coin 6 -->
+        <g transform="translate(560, 0)">
+            <g>
+                <animateTransform attributeName="transform" type="translate" values="0,-180; 0,-180; 0,800; 0,800" keyTimes="0; 0.625; 0.78; 1" dur="6s" repeatCount="indefinite"/>
+                <use href="#coin" transform="scale(0.7)"/>
+            </g>
+        </g>
+        <!-- Coin 7 -->
+        <g transform="translate(650, 0)">
+            <g>
+                <animateTransform attributeName="transform" type="translate" values="0,-90; 0,-90; 0,800; 0,800" keyTimes="0; 0.660; 0.92; 1" dur="6s" repeatCount="indefinite"/>
+                <use href="#coin" transform="scale(1.3)"/>
+            </g>
+        </g>
+        <!-- Coin 8 -->
+        <g transform="translate(730, 0)">
+            <g>
+                <animateTransform attributeName="transform" type="translate" values="0,-140; 0,-140; 0,800; 0,800" keyTimes="0; 0.645; 0.86; 1" dur="6s" repeatCount="indefinite"/>
+                <use href="#coin" transform="scale(0.85)"/>
+            </g>
+        </g>
+        <!-- Coin 9 -->
+        <g transform="translate(100, 0)">
+            <g>
+                <animateTransform attributeName="transform" type="translate" values="0,-250; 0,-250; 0,800; 0,800" keyTimes="0; 0.670; 0.95; 1" dur="6s" repeatCount="indefinite"/>
+                <use href="#coin" transform="scale(0.95)"/>
+            </g>
+        </g>
+        <!-- Coin 10 -->
+        <g transform="translate(600, 0)">
+            <g>
+                <animateTransform attributeName="transform" type="translate" values="0,-220; 0,-220; 0,800; 0,800" keyTimes="0; 0.630; 0.84; 1" dur="6s" repeatCount="indefinite"/>
+                <use href="#coin" transform="scale(1.15)"/>
+            </g>
+        </g>
+    </g>
+
+
+    <!-- ================= TEXT OVERLAYS ================= -->
+    <!-- Base text style mimics the TikTok/Shorts caption style perfectly -->
+    <g font-family="Impact, Arial Black, sans-serif" font-weight="bold" paint-order="stroke fill" stroke="#000" stroke-width="12" stroke-linejoin="round" filter="url(#dropShadow)">
+        
+        <!-- 1. "Hold Up Wait" (0.00 to 0.125) -->
+        <g>
+            <animate attributeName="opacity" values="1;0;0" keyTimes="0;0.125;1" dur="6s" repeatCount="indefinite" calcMode="discrete"/>
+            <text x="60" y="160" font-size="80" fill="#FFF">Hold Up</text>
+            <!-- "Wait" is slightly staggered within this block -->
+            <g>
+                <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.05;0.125;1" dur="6s" repeatCount="indefinite" calcMode="discrete"/>
+                <text x="120" y="260" font-size="80" fill="#FFF">Wait</text>
+            </g>
+        </g>
+
+        <!-- 2. "I Just Hit The JACKPOOOOOT" (0.125 - 0.375 AND 0.625 - 1.0) -->
+        <g>
+            <animate attributeName="opacity" values="0;1;0;1" keyTimes="0;0.125;0.375;0.625;1" dur="6s" repeatCount="indefinite" calcMode="discrete"/>
+            <!-- Pulsing bounce effect syncing with beat -->
+            <g>
+                <animateTransform attributeName="transform" type="translate" values="0,0; 0,-8; 0,0" dur="0.25s" repeatCount="indefinite"/>
+                <text x="400" y="100" font-size="60" fill="#FFF" text-anchor="middle">I Just</text>
+                <text x="400" y="170" font-size="60" fill="#FFF" text-anchor="middle">Hit The</text>
+                <text x="400" y="550" font-size="85" fill="#FFD700" text-anchor="middle">JACKPOOOOOT</text>
+            </g>
+        </g>
+
+        <!-- 3. "HEY HEY HEY" (0.375 to 0.625) with staggered appearances -->
+        <!-- Hey Group 1: Appears at 0.375 -->
+        <g>
+            <animate attributeName="opacity" values="0;0;1;0;0" keyTimes="0;0.375;0.376;0.625;1" dur="6s" repeatCount="indefinite" calcMode="discrete"/>
+            <g>
+                <animateTransform attributeName="transform" type="scale" values="1; 1.1; 1" dur="0.3s" repeatCount="indefinite"/>
+                <text x="80" y="200" font-size="70" fill="#FFF">HEY</text>
+                <text x="720" y="200" font-size="70" fill="#FFF" text-anchor="end">HEY</text>
+            </g>
+        </g>
+
+        <!-- Hey Group 2: Appears at 0.425 -->
+        <g>
+            <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.425;0.625;1" dur="6s" repeatCount="indefinite" calcMode="discrete"/>
+            <g>
+                <animateTransform attributeName="transform" type="scale" values="1; 1.1; 1" dur="0.3s" repeatCount="indefinite"/>
+                <text x="80" y="300" font-size="70" fill="#FFF">HEY</text>
+                <text x="720" y="300" font-size="70" fill="#FFF" text-anchor="end">HEY</text>
+            </g>
+        </g>
+
+        <!-- Hey Group 3: Appears at 0.475 -->
+        <g>
+            <animate attributeName="opacity" values="0;1;0;0" keyTimes="0;0.475;0.625;1" dur="6s" repeatCount="indefinite" calcMode="discrete"/>
+            <g>
+                <animateTransform attributeName="transform" type="scale" values="1; 1.1; 1" dur="0.3s" repeatCount="indefinite"/>
+                <text x="80" y="400" font-size="70" fill="#FFF">HEY</text>
+                <text x="720" y="400" font-size="70" fill="#FFF" text-anchor="end">HEY</text>
+            </g>
+        </g>
+
+    </g>
+</svg>
+</body>
+</html>
