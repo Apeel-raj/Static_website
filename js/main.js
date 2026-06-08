@@ -191,7 +191,7 @@ function initAdvancedThreeJS() {
 }
 
 function initProjectCardInteractions() {
-    const cards = document.querySelectorAll('.project-card');
+    const cards = document.querySelectorAll('.project-card, .skill-card');
     const isTouch = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
     
     if (isTouch) return;

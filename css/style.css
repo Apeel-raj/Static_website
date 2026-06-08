@@ -239,7 +239,10 @@ h1, h2, h3 {
     padding: 2.5rem;
     border-radius: 16px;
     backdrop-filter: blur(10px);
-    transition: background 0.5s, border-color 0.5s, transform 0.3s;
+    transition: background 0.5s, border-color 0.5s, transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
 }
 
 .skill-icon {
@@ -284,7 +287,7 @@ h1, h2, h3 {
 }
 
 /* Mouse-follow glow effect */
-.project-card::before {
+.project-card::before, .skill-card::before {
     content: '';
     position: absolute;
     top: 0;
@@ -303,7 +306,7 @@ h1, h2, h3 {
 }
 
 /* Light theme adjustments for the glow */
-:root[data-theme="light"] .project-card::before {
+:root[data-theme="light"] .project-card::before, :root[data-theme="light"] .skill-card::before {
     background: radial-gradient(
         350px circle at var(--mouse-x, 0px) var(--mouse-y, 0px),
         rgba(0, 0, 0, 0.05),
@@ -311,12 +314,12 @@ h1, h2, h3 {
     );
 }
 
-.project-card:hover::before {
+.project-card:hover::before, .skill-card:hover::before {
     opacity: 1;
 }
 
 /* Ensure card content renders on top of glow */
-.project-card > * {
+.project-card > *, .skill-card > * {
     position: relative;
     z-index: 1;
 }
