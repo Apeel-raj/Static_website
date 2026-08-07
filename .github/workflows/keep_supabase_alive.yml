@@ -1,0 +1,26 @@
+name: Keep Supabase Alive
+
+on:
+  schedule:
+    # Runs every 3 days at 00:00 UTC to keep Supabase free database active
+    - cron: '0 0 */3 * *'
+  workflow_dispatch:
+
+jobs:
+  ping-supabase:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Supabase Database
+        run: |
+          echo "Sending Keep-Alive ping to Supabase Database..."
+          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -X GET \
+            "https://dddogsmjvsfohubhtodm.supabase.co/rest/v1/cases?select=id&limit=1" \
+            -H "apikey: sb_publishable_611ogz3tt-S5dJlSs7H99w_5I3srlMi" \
+            -H "Authorization: Bearer sb_publishable_611ogz3tt-S5dJlSs7H99w_5I3srlMi")
+          
+          echo "Supabase HTTP Response Code: $RESPONSE"
+          if [ "$RESPONSE" -eq 200 ] || [ "$RESPONSE" -eq 206 ]; then
+            echo "Successfully pinged Supabase! Database remains active and unpaused."
+          else
+            echo "Warning: Received HTTP Code $RESPONSE"
+          fi
