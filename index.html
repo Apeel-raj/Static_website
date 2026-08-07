@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Apeel Raj Adhikari | Creative Developer & AI Enthusiast</title>
+    <title>Apeel Raj Adhikari | Portfolio</title>
     <meta name="description" content="Portfolio of Apeel Raj Adhikari, an IT student from Pokhara, Nepal, and AI enthusiast. Creator of NKP Legal AI Search Engine (/law).">
-    <link rel="stylesheet" href="./css/style.css?v=1.0.5">
-    <!-- Google Fonts: Inter & Outfit -->
+    <link rel="stylesheet" href="./css/style.css?v=1.0.6">
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
     <!-- Three.js CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
     <!-- GSAP for advanced animations -->
@@ -25,10 +25,7 @@
                 <a href="#about" class="nav-item">About</a>
                 <a href="#skills" class="nav-item">Expertise</a>
                 <a href="#projects" class="nav-item">Work</a>
-                <a href="/law/" class="nav-law-btn">
-                    <span>⚖️ Legal Search</span>
-                    <span class="badge-law">/law</span>
-                </a>
+                <a href="/law/" class="nav-item nav-law-item">Legal Search (/law)</a>
             </div>
         </div>
     </header>
@@ -61,10 +58,7 @@
                 <h1 class="hero-title stagger-text">Apeel Raj<br><span class="highlight">Adhikari</span></h1>
                 <p class="hero-subtitle fade-up">IT Student based in Pokhara, Nepal. AI Enthusiast and Creative Developer.</p>
                 <div style="margin-top: 24px; display: flex; gap: 14px; justify-content: center; flex-wrap: wrap;" class="fade-up">
-                    <a href="/law/" class="hero-law-btn">
-                        <span>⚖️ Launch NKP Legal Engine</span>
-                        <span class="sub-badge">apeel.com.np/law</span>
-                    </a>
+                    <a href="/law/" class="btn">Launch Legal Engine (/law) &rarr;</a>
                 </div>
                 <div class="scroll-indicator fade-up">
                     <span class="mouse">
@@ -106,7 +100,7 @@
                             <path class="server-light" d="M70 65 a5 5 0 1 0 10 0 a5 5 0 1 0 -10 0" fill="currentColor" stroke="none"/>
                         </svg>
                         <h3>Full-Stack Web Development</h3>
-                        <p>Capable of building complete web applications, integrating Supabase & PostgreSQL backends, and developing custom admin panels.</p>
+                        <p>Capable of building complete business websites, integrating robust backends, and developing custom admin panels for easy management.</p>
                     </div>
                     <div class="skill-card fade-up">
                         <svg class="skill-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linejoin="round">
@@ -125,7 +119,7 @@
                             <path class="gear-icon" d="M50 35 L50 30 M50 70 L50 65 M35 50 L30 50 M70 50 L65 50 M39 39 L35 35 M61 61 L65 65 M39 61 L35 65 M61 39 L65 35" />
                         </svg>
                         <h3>Creative Development</h3>
-                        <p>Building interactive, fast, dark glassmorphism and SVG animated web experiences (like this portfolio).</p>
+                        <p>Building interactive, fast, heavy CSS, and SVG animated web experiences (like this portfolio).</p>
                     </div>
                     <div class="skill-card fade-up">
                         <svg class="skill-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4">
@@ -151,19 +145,24 @@
                 <h2 class="section-title stagger-text">Featured Work</h2>
                 <div class="projects-grid">
                     <!-- Project Flagship: NKP Supreme Court Legal Search Engine -->
-                    <div class="project-card fade-up flagship-card" style="grid-column: 1 / -1;">
+                    <div class="project-card fade-up" style="grid-column: 1 / -1;">
                         <div>
-                            <div class="flagship-tag">⚖️ FLAGSHIP APPLICATION</div>
-                            <h3>NKP Supreme Court Legal AI Search Engine</h3>
+                            <svg class="project-icon" viewBox="0 0 100 100" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M 20,40 L 80,40" />
+                                <path d="M 50,20 L 50,80" />
+                                <path d="M 30,40 L 15,65 L 45,65 Z" />
+                                <path d="M 70,40 L 55,65 L 85,65 Z" />
+                            </svg>
+                            <h3>NKP Supreme Court Legal Search Engine</h3>
                             <p>An intelligent Supreme Court Case search engine indexing 10,467 judgments from Nepal Kanoon Patrika. Features real-time Romanized-to-Devanagari transliteration, phonetic name matching (e.g. `badri khatri` -> `बद्री खत्री`), and direct links to official NKP full text judgments.</p>
                             <div class="project-tech-tags">
                                 <span>Vite / React</span>
-                                <span>Supabase PostgreSQL</span>
-                                <span>Roman NLP Engine</span>
-                                <span>Glassmorphism Dark UI</span>
+                                <span>Supabase</span>
+                                <span>Roman NLP</span>
+                                <span>Search Engine</span>
                             </div>
                         </div>
-                        <a href="/law/" class="project-link launch-law-link">Launch Legal Search (/law) &rarr;</a>
+                        <a href="/law/" class="project-link">Launch Legal Search (/law) &rarr;</a>
                     </div>
 
                     <!-- Project 1: Out of Town Adventure -->
