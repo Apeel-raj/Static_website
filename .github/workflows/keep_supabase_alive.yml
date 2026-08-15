@@ -1,26 +1,63 @@
-name: Keep Supabase Alive
+name: Keep Supabase Database Active
 
 on:
   schedule:
-    # Runs every 3 days at 00:00 UTC to keep Supabase free database active
-    - cron: '0 0 */3 * *'
+    # Runs twice daily at 00:00 and 12:00 UTC (every 12 hours)
+    # High frequency guarantees Supabase never pauses even if GitHub delays a run
+    - cron: '0 0,12 * * *'
   workflow_dispatch:
 
 jobs:
-  ping-supabase:
+  keep-alive:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Supabase Database
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
         run: |
-          echo "Sending Keep-Alive ping to Supabase Database..."
-          RESPONSE=$(curl -s -o /dev/null -w "%{http_code}" -X GET \
-            "https://dddogsmjvsfohubhtodm.supabase.co/rest/v1/cases?select=id&limit=1" \
-            -H "apikey: sb_publishable_611ogz3tt-S5dJlSs7H99w_5I3srlMi" \
-            -H "Authorization: Bearer sb_publishable_611ogz3tt-S5dJlSs7H99w_5I3srlMi")
+          pip install requests
+
+      - name: Ping Supabase PostgreSQL via REST API
+        run: |
+          python - << 'EOF'
+          import requests
+          import datetime
+          import sys
+
+          SUPABASE_URL = "https://dddogsmjvsfohubhtodm.supabase.co"
+          SUPABASE_KEY = "sb_publishable_611ogz3tt-S5dJlSs7H99w_5I3srlMi"
+
+          headers = {
+              "apikey": SUPABASE_KEY,
+              "Authorization": f"Bearer {SUPABASE_KEY}",
+              "Cache-Control": "no-cache",
+              "Pragma": "no-cache",
+              "Prefer": "count=exact"
+          }
+
+          now = datetime.datetime.now(datetime.timezone.utc).isoformat()
+          print(f"[{now}] Starting Supabase Keep-Alive Ping...")
+
+          # 1. Query cases table
+          res1 = requests.get(f"{SUPABASE_URL}/rest/v1/cases?select=id,decision_number&limit=5", headers=headers, timeout=15)
+          print(f"Query 1 Status: {res1.status_code}")
           
-          echo "Supabase HTTP Response Code: $RESPONSE"
-          if [ "$RESPONSE" -eq 200 ] || [ "$RESPONSE" -eq 206 ]; then
-            echo "Successfully pinged Supabase! Database remains active and unpaused."
-          else
-            echo "Warning: Received HTTP Code $RESPONSE"
-          fi
+          if res1.status_code in [200, 206]:
+              print(f"Successfully retrieved sample cases: {res1.json()[:2]}")
+          else:
+              print(f"Warning on Query 1: {res1.text}")
+
+          # 2. Query table count to trigger index scan
+          res2 = requests.get(f"{SUPABASE_URL}/rest/v1/cases?select=id&limit=1", headers=headers, timeout=15)
+          print(f"Query 2 Status: {res2.status_code}")
+          print(f"Content Range / Total Count: {res2.headers.get('content-range', 'N/A')}")
+
+          if res1.status_code in [200, 206] or res2.status_code in [200, 206]:
+              print(f"[{now}] SUCCESS: Supabase database is active and registered traffic!")
+          else:
+              print(f"[{now}] ERROR: Failed to reach Supabase.")
+              sys.exit(1)
+          EOF
